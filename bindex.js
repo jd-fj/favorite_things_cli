@@ -52,6 +52,7 @@ export function addKeyValue(key, value, extra) {
       console.log("did I update the value? ", fakeDatabase)
     } else {
       fakeDatabase[key] = value;
+      return fakeDatabase;
       console.log("ok", fakeDatabase)
     }
   }

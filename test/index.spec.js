@@ -1,7 +1,6 @@
 import main, { exit, validateArguments, addKeyValue } from '../bindex.js';
 import * as readline from 'node:readline';
 import { stdin as input, stdout as output } from 'node:process';
-// const { expect } = chai;
 import {expect} from 'chai';
 
 
@@ -19,10 +18,19 @@ describe('main key-value function', () => {
   it('should do something', () => {
   })
 
-  it('should receive user input', async () => {
+  it('should promt user correctly', () => {
     const rl = readline.createInterface({
       input,
       output,
+      prompt: '> '
+    });
+    const getPrompt = rl.getPrompt() 
+    expect(getPrompt).to.equal('> ')
+  })
+
+  it('should receive user input', () => {
+    const rl = readline.createInterface({
+      input,
       prompt: '> '
     });
     const userInput = 'put hi mom\r'
@@ -34,13 +42,12 @@ describe('main key-value function', () => {
     rl.write(userInput)
   })
 
-  it('should validate userInput', async () => {
+  it('should validate userInput', () => {
     const rl = readline.createInterface({
       input,
-      output,
       prompt: '> '
     });
-    const userInput = ' put favorite_color purple extraArg \r' // <-- spaces and extra arg
+    const userInput = '  put favorite_color purple extraArg \r' // <-- spaces and extra arg
 
     rl.on('line', (line) => {
       const { command, key, value, extra } = validateArguments(line);
@@ -53,21 +60,45 @@ describe('main key-value function', () => {
     rl.write(userInput)
   })
 
-  // it('should invalid bad put command', async () => {
-  //   const rl = readline.createInterface({
-  //     input,
-  //     output,
-  //     prompt: '> '
-  //   });
-  //   const userInput = ' put favorite_color purple extraArg \r' // <-- spaces and extra arg
-  //   const fakeDatabase = {}
+  it('should prevent bad put command from executing', () => {
+    const rl = readline.createInterface({
+      input,
+      output,
+      prompt: '> '
+    });
+    const userInput = 'put favorite_color purple extrArgs\r' // <-- spaces and extra arg
 
-  //   rl.on('line', (line) => {
-  //     const { command, key, value, extra } = validateArguments(line);
-  //     addKeyValue(key, value, extra);
-  //     expect(fakeDatabase).to.be.an('object').that.is.empty;
-  //   })
+    rl.on('line', (line) => {
+      const { command, key, value, extra } = validateArguments(line);
+      expect(command).to.equal('put');
 
-  //   rl.write(userInput)
-  // })
+      const doNotAddThisData = addKeyValue(key, value, extra);
+      expect(doNotAddThisData).to.be.undefined;
+    })
+
+    rl.write(userInput)
+  })
+
+  it('should correctly add put key/values', () => {
+    const rl = readline.createInterface({
+      input,
+      output,
+      prompt: '> '
+    });
+    const userInput = 'put favorite_color purple\r';
+
+    rl.on('line', (line) => {
+      const { command, key, value, extra } = validateArguments(line);
+      expect(command).to.equal('put');
+
+      const addedData = addKeyValue(key, value);
+      console.log('fake database', addedData);
+      const expected = { 'favorite_color': 'purple' }
+      expect(addedData).to.deep.equal(expected)
+    })
+
+    rl.write(userInput)
+  })
+
+
 });
