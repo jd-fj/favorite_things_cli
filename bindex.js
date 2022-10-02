@@ -31,11 +31,11 @@ export default async function main() {
         break;
       case 'fetch':
         // console.log('you used the fetch command');
-        console.log('fakeDataBase', Object.keys(fakeDatabase));
+        // console.log('fakeDataBase', Object.keys(fakeDatabase));
+        fetch(key);
         break;
       case 'exit':
-        console.log('Bye!')
-        process.exit(0);
+        byeBye();
       default:
         console.log("Unknown command. Known commands are: put, fetch, exit");
         break;
@@ -44,8 +44,7 @@ export default async function main() {
     rl.prompt();
 
   }).on('close', () => {
-    console.log('Bye!');
-    process.exit(0);
+    byeBye();
   });
 }
 
@@ -61,7 +60,21 @@ function addKeyValue(key, value, extra) {
       console.log("did I update the value? ", fakeDatabase)
     } else {
       fakeDatabase[key] = value;
-      console.log("did it work? fakeData: ", fakeDatabase)
+      console.log("ok")
     }
   }
+}
+
+function fetch(query) {
+  if (!query) {
+    console.log("Invalid syntax")
+  } else if (query in fakeDatabase == false) {
+    console.log('value not found');
+    byeBye();
+  }
+}
+
+function byeBye() {
+  console.log('Bye!');
+  process.exit(0);
 }
