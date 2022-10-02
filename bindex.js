@@ -50,7 +50,7 @@ export default async function main() {
 
 function addKeyValue(key, value, extra) {
   // console.log("extra!", extra)
-  if (!key || !value || extra) {
+  if (!key || !value || extra) { // <-- could be its own validate args 
     console.log("Invalid syntax");
     main();
   } else {
@@ -60,18 +60,21 @@ function addKeyValue(key, value, extra) {
       console.log("did I update the value? ", fakeDatabase)
     } else {
       fakeDatabase[key] = value;
-      console.log("ok")
+      console.log("ok", fakeDatabase)
     }
   }
 }
 
-function fetch(query) {
+function fetch(query) { //  <-- validate but it would be diff than add validate
   if (!query) {
     console.log("Invalid syntax")
-  } else if (query in fakeDatabase == false) {
+  } else if (!fakeDatabase[query]) {
     console.log('value not found');
-    byeBye();
+    // byeBye();
+    console.log(fakeDatabase)
   }
+  const found = fakeDatabase[query]
+  console.log('found!', found);
 }
 
 function byeBye() {
