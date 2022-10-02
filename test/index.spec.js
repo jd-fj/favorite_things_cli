@@ -88,7 +88,7 @@ describe('main key-value function', () => {
     const userInput = 'put favorite_color purple\r';
 
     rl.on('line', (line) => {
-      const { command, key, value, extra } = validateArguments(line);
+      const { command, key, value } = validateArguments(line);
       expect(command).to.equal('put');
 
       const addedData = addKeyValue(key, value);

@@ -21,7 +21,7 @@ export default async function main() {
         addKeyValue(key, value, extra)
         break;
       case 'fetch':
-        fetch(key, value);
+        fetch(key, value, extra);
         break;
       case 'exit':
         exit();
@@ -51,8 +51,8 @@ export function addKeyValue(key, value, extra) {
   }
 }
 
-export function fetch(query, extra) {
-  if (!query || extra) {
+export function fetch(query, value, extra) {
+  if (!query || value == '' || extra == '') {
     console.log("Invalid syntax")
     return;
   } else if (!storedInput[query]) {
