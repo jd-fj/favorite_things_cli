@@ -15,23 +15,18 @@ export default async function main() {
   rl.prompt();
 
   rl.on('line', (line) => {
-    const parseLine = line.trim().split(" "); // <-- validate func? 
-    const command = parseLine[0];
-    const key = parseLine[1];
-    const value = parseLine[2];
-    const extra = parseLine[3]; // <-- invalid syntax, too many args
 
-    // console.log('parseLine?', parseLine);
-    // console.log("command: ", command, "\nkey: ", key, " \nvalue: ", value)
+    const {command, key, value, extra} = validateArguments(line);
+    console.log("command? ", command)
+    console.log('key? ', key);
+    console.log('value? ', value);
+    console.log('extra? ', extra) // <-- too many args, invalid error
 
-    switch (command.trim()) {
+    switch (command) {
       case 'put':
-        // console.log('you used the put command');
         addKeyValue(key, value, extra)
         break;
       case 'fetch':
-        // console.log('you used the fetch command');
-        // console.log('fakeDataBase', Object.keys(fakeDatabase));
         fetch(key);
         break;
       case 'exit':
@@ -56,7 +51,7 @@ function addKeyValue(key, value, extra) {
   } else {
     // keys = Object.keys()
     if (key in fakeDatabase) {
-      Object.assign(fakeDatabase, {[key]: value})
+      Object.assign(fakeDatabase, { [key]: value })
       console.log("did I update the value? ", fakeDatabase)
     } else {
       fakeDatabase[key] = value;
@@ -74,10 +69,22 @@ function fetch(query) { //  <-- validate but it would be diff than add validate
     console.log(fakeDatabase)
   }
   const found = fakeDatabase[query]
-  console.log('found!', found);
+  if (found) {
+    console.log('found!', found);
+  }
 }
 
 function byeBye() {
   console.log('Bye!');
   process.exit(0);
+}
+
+function validateArguments(args) {
+  const parseLine = args.trim().split(" "); // <-- validate func? 
+  const command = parseLine[0];
+  const key = parseLine[1];
+  const value = parseLine[2];
+  const extra = parseLine[3];
+  console.log('\x1b[5m');
+  return {command, key, value, extra}
 }
