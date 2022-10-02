@@ -4,18 +4,16 @@ import { stdin as input, stdout as output } from 'node:process';
 
 const fakeDatabase = {};
 
+const rl = readline.createInterface({
+  input,
+  output,
+  prompt: '> '
+});
+
 export default async function main() {
 
-  const rl = readline.createInterface({
-    input,
-    output,
-    prompt: '> '
-  });
-
   rl.prompt();
-
   rl.on('line', (line) => {
-
     const {command, key, value, extra} = validateArguments(line);
     console.log("command? ", command)
     console.log('key? ', key);
@@ -84,6 +82,5 @@ function validateArguments(args) {
   const key = parseLine[1];
   const value = parseLine[2];
   const extra = parseLine[3];
-  console.log('\x1b[5m');
   return {command, key, value, extra}
 }
