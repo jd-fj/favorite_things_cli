@@ -47,7 +47,6 @@ function addKeyValue(key, value, extra) {
   // console.log("extra!", extra)
   if (!key || !value || extra) { // <-- could be its own validate args 
     console.log("Invalid syntax");
-    main();
   } else {
     // keys = Object.keys()
     if (key in fakeDatabase) {
