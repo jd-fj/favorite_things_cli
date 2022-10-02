@@ -25,7 +25,7 @@ export default async function main() {
         addKeyValue(key, value, extra)
         break;
       case 'fetch':
-        fetch(key);
+        fetch(key, value);
         break;
       case 'exit':
         exit();
@@ -52,23 +52,30 @@ export function addKeyValue(key, value, extra) {
       console.log("did I update the value? ", fakeDatabase)
     } else {
       fakeDatabase[key] = value;
-      return fakeDatabase;
       console.log("ok", fakeDatabase)
+      return fakeDatabase;
     }
   }
 }
 
-function fetch(query) { //  <-- validate but it would be diff than add validate
-  if (!query) {
+export function fetch(query, extra) { //  <-- validate but it would be diff than add validate
+  if (!query || extra) {
     console.log("Invalid syntax")
+    return;
   } else if (!fakeDatabase[query]) {
     console.log('value not found');
     // exit();
     console.log(fakeDatabase)
+    return;
   }
-  const found = fakeDatabase[query]
+
+  const found = fakeDatabase[query];
+
   if (found) {
     console.log('found!', found);
+    return found;
+  } else {
+    return null;
   }
 }
 
