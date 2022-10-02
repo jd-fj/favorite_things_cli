@@ -7,13 +7,13 @@ const fakeDatabase = {};
 export default async function main() {
 
   const rl = readline.createInterface({
-    input: process.stdin,
-    output: process.stdout,
+    input,
+    output,
     prompt: '> '
   });
 
   rl.prompt();
-  
+
   rl.on('line', (line) => {
     const parseLine = line.trim().split(" "); // <-- validate func? 
     const command = parseLine[0];
@@ -21,23 +21,23 @@ export default async function main() {
     const value = parseLine[2];
     const extra = parseLine[3]; // <-- invalid syntax, too many args
 
-    console.log('parseLine?', parseLine);
-    console.log("command: ", command, "\nkey: ", key, " \nvalue: ", value)
+    // console.log('parseLine?', parseLine);
+    // console.log("command: ", command, "\nkey: ", key, " \nvalue: ", value)
 
     switch (command.trim()) {
       case 'put':
-        console.log('you used the put command');
+        // console.log('you used the put command');
         addKeyValue(key, value, extra)
         break;
       case 'fetch':
-        console.log('you used the fetch command');
+        // console.log('you used the fetch command');
         console.log('fakeDataBase', Object.keys(fakeDatabase));
         break;
       case 'exit':
         console.log('Bye!')
         process.exit(0);
       default:
-        console.log(`Say what? I might have heard '${line.trim()}'`);
+        console.log("Unknown command. Known commands are: put, fetch, exit");
         break;
     }
 
@@ -47,17 +47,21 @@ export default async function main() {
     console.log('Bye!');
     process.exit(0);
   });
-
 }
 
 function addKeyValue(key, value, extra) {
-  console.log("extra!", extra)
+  // console.log("extra!", extra)
   if (!key || !value || extra) {
     console.log("Invalid syntax");
     main();
   } else {
-    fakeDatabase[key] = value;
-    console.log("did it work? fakeData: ", fakeDatabase)
-
+    // keys = Object.keys()
+    if (key in fakeDatabase) {
+      Object.assign(fakeDatabase, {[key]: value})
+      console.log("did I update the value? ", fakeDatabase)
+    } else {
+      fakeDatabase[key] = value;
+      console.log("did it work? fakeData: ", fakeDatabase)
+    }
   }
 }
