@@ -1,5 +1,5 @@
 import * as fsp from 'fs/promises';
-import * as readline from 'node:readline/promises';
+import * as readline from 'node:readline';
 import { stdin as input, stdout as output } from 'node:process';
 
 const fakeDatabase = {};
@@ -28,7 +28,7 @@ export default async function main() {
         fetch(key);
         break;
       case 'exit':
-        byeBye();
+        exit();
       default:
         console.log("Unknown command. Known commands are: put, fetch, exit");
         break;
@@ -37,7 +37,7 @@ export default async function main() {
     rl.prompt();
 
   }).on('close', () => {
-    byeBye();
+    exit();
   });
 }
 
@@ -62,7 +62,7 @@ function fetch(query) { //  <-- validate but it would be diff than add validate
     console.log("Invalid syntax")
   } else if (!fakeDatabase[query]) {
     console.log('value not found');
-    // byeBye();
+    // exit();
     console.log(fakeDatabase)
   }
   const found = fakeDatabase[query]
@@ -71,12 +71,12 @@ function fetch(query) { //  <-- validate but it would be diff than add validate
   }
 }
 
-function byeBye() {
+export function exit() {
   console.log('Bye!');
   process.exit(0);
 }
 
-function validateArguments(args) {
+export function validateArguments(args) {
   const parseLine = args.trim().split(" "); // <-- validate func? 
   const command = parseLine[0];
   const key = parseLine[1];

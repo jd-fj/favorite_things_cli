@@ -1,17 +1,13 @@
-// var assert = require('assert');
-
-// describe('Array', function () {
-//   describe('#indexOf()', function () {
-//     it('should return -1 when the value is not present', function () {
-//       assert.equal([1, 2, 3].indexOf(4), -1);
-//     });
-//   });
-// });
-
-import main  from '../bindex.js';
+import main, { exit } from '../bindex.js';
+import * as readline from 'node:readline';
+import { stdin as input, stdout as output } from 'node:process';
 
 describe('main key-value function', () => {
-  beforeEach(function () {
+  before(function () {
+    const fakeDatabase = {};
+
+    
+
     main();
     console.log('before each test, run this');
   });
@@ -19,6 +15,7 @@ describe('main key-value function', () => {
   afterEach(function () {
     // runs once after the last test in this block
     console.log('after each test run this');
+    exit();
   });
 
   it('should do something', () => {
@@ -27,5 +24,16 @@ describe('main key-value function', () => {
     // console.log(obj)
     // expect(obj).to.be.an('object');
     console.log('test case');
+
+    const rl = readline.createInterface({
+      input,
+      output,
+      prompt: '> '
+    });
+
+    rl.on('line', (line) => {
+      console.log('line read: ', line);
+    })
+    rl.write('put hi mom \n\r')
   })
 });
