@@ -14,7 +14,7 @@ export default async function main() {
 
   rl.prompt();
   rl.on('line', (line) => {
-    const {command, key, value, extra} = validateArguments(line);
+    const { command, key, value, extra } = validateArguments(line);
     console.log("command? ", command)
     console.log('key? ', key);
     console.log('value? ', value);
@@ -41,7 +41,7 @@ export default async function main() {
   });
 }
 
-function addKeyValue(key, value, extra) {
+export function addKeyValue(key, value, extra) {
   // console.log("extra!", extra)
   if (!key || !value || extra) { // <-- could be its own validate args 
     console.log("Invalid syntax");
@@ -82,5 +82,5 @@ export function validateArguments(args) {
   const key = parseLine[1];
   const value = parseLine[2];
   const extra = parseLine[3];
-  return {command, key, value, extra}
+  return { command, key, value, extra }
 }
