@@ -1,46 +1,85 @@
 import * as fsp from 'fs/promises';
+import * as readline from 'node:readline';
+import { stdin as input, stdout as output } from 'node:process';
 
-export default async function keyAndValue() {
+const storedInput = {};
 
-    let allArgs = [];
-    let keys = [];
-    let values = [];
+const rl = readline.createInterface({
+  input,
+  output,
+  prompt: '> '
+});
 
-    function parseArgs(userArgs) {
+export default async function main() {
 
-        const inputArgs = userArgs.slice(2) // <-- remove execPath and filename
+  rl.prompt();
+  rl.on('line', (line) => {
+    const { command, key, value, extra } = validateArguments(line);
 
-        for (let i = 0; i < inputArgs.length; i++) {
-            allArgs.push(inputArgs[i])
-            if (i % 2 == 0) {
-                console.log("key: ", inputArgs[i])
-                keys.push(inputArgs[i])
-            } else {
-                values.push(inputArgs[i])
-            }
-        }
+    switch (command) {
+      case 'put':
+        addKeyValue(key, value, extra)
+        break;
+      case 'fetch':
+        fetch(key, value);
+        break;
+      case 'exit':
+        exit();
+      default:
+        console.log("Unknown command. Known commands are: put, fetch, exit");
+        break;
     }
 
-    parseArgs(process.argv)
-    // console.log('allArgs', allArgs);
-    console.log('keys: ', keys);
-    // console.log('values: ', values);
+    rl.prompt();
 
-    const readData = await fsp.readFile('testData.json', "utf-8", (err) => {
-        if (err) {
-            console.log("read err: ", err)
-        }
-    })
-    console.log("readData: ", readData)
+  }).on('close', () => {
+    exit();
+  });
+}
 
-    // const data = JSON.stringify(allArgs)
+export function addKeyValue(key, value, extra) {
+  if (!key || !value || extra) {
+    console.log("Invalid syntax");
+  } else {
+    if (key in storedInput) {
+      Object.assign(storedInput, { [key]: value })
+    } else {
+      storedInput[key] = value;
+      console.log("ok")
+      return storedInput;
+    }
+  }
+}
 
-    // fs.writeFile('./store.json', data, (err) => {
-    //     if (err) {
-    //         console.log('There has been an error saving your configuration data.');
-    //         console.log(err.message);
-    //         return;
-    //     }
-    //     console.log('Configuration saved successfully.')
-    // });
+export function fetch(query, extra) {
+  if (!query || extra) {
+    console.log("Invalid syntax")
+    return;
+  } else if (!storedInput[query]) {
+    console.log('value not found');
+    return;
+  }
+
+  const found = storedInput[query];
+
+  if (found) {
+    console.log(found);
+    return found;
+  } else {
+    return null;
+  }
+}
+
+export function exit() {
+  console.log('Bye!');
+  process.exit(0);
+}
+
+export function validateArguments(args) {
+  const parseLine = args.trim().split(" ");
+  const command = parseLine[0];
+  const key = parseLine[1];
+  const value = parseLine[2];
+  const extra = parseLine[3];
+  return { command, key, value, extra }
 }

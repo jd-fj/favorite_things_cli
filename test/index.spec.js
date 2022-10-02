@@ -1,8 +1,7 @@
-import main, { exit, validateArguments, addKeyValue, fetch } from '../bindex.js';
+import main, { exit, validateArguments, addKeyValue, fetch } from '../index.js';
 import * as readline from 'node:readline';
 import { stdin as input, stdout as output } from 'node:process';
 import { expect } from 'chai';
-import exp from 'node:constants';
 
 
 describe('main key-value function', () => {
@@ -93,7 +92,6 @@ describe('main key-value function', () => {
       expect(command).to.equal('put');
 
       const addedData = addKeyValue(key, value);
-      console.log('fake database', addedData);
       const expected = { 'favorite_color': 'purple' }
       expect(addedData).to.deep.equal(expected)
     })
@@ -131,7 +129,7 @@ describe('main key-value function', () => {
       prompt: '> '
     });
     const userInput = '    fetch fave_color     \r';
-    const fakeDatabase = { 'favorite_color': 'purple' }
+    const storedInput = { 'favorite_color': 'purple' }
 
     rl.on('line', (line) => {
       const { command, key } = validateArguments(line);
@@ -152,7 +150,7 @@ describe('main key-value function', () => {
       prompt: '> '
     });
     const userInput = 'fetch favorite_color\r';
-    const fakeDatabase = { 'favorite_color': 'purple' }
+    const storedInput = { 'favorite_color': 'purple' }
 
     rl.on('line', (line) => {
       const { command, key } = validateArguments(line);
@@ -160,12 +158,10 @@ describe('main key-value function', () => {
       expect(key).to.equal('favorite_color');
 
       const fetchResult = fetch(key);
-      const expectReturnedValue = fakeDatabase[key];
+      const expectReturnedValue = storedInput[key];
       expect(fetchResult).to.equal(expectReturnedValue)
     })
 
     rl.write(userInput)
   })
-
-
 });
