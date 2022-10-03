@@ -54,7 +54,7 @@ describe('main key-value function', () => {
       expect(command).to.equal('put');
       expect(key).to.equal('favorite_color');
       expect(value).to.equal('purple');
-      expect(extra).to.equal('extraArg');
+      expect(extra).to.equal('extraarg');
     })
 
     rl.write(userInput)
