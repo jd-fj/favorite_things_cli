@@ -75,7 +75,7 @@ Unknown command. Known commands are: put, fetch, exit
 ```
 
 ### **Uninstall tool**
-If you wish to uninstall the tool, run the following
+If you wish to uninstall the tool, run the following and delete the folder
 ```
 $ npm uninstall --location=global favorite_things_cli
 ```
