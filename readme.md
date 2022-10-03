@@ -28,12 +28,14 @@ Run tests with `npm test` check if i need to intall/sudo first?
 ## Running the program
 Install the cli by running
 ```
-$ npm install -g
+$ npm install --location=global
 ```
+
 Run the program by typing the following into the terminal
 ```
 $ key-value
 ``` 
+
 You will be met with the following command prompt
 ```
 >
@@ -60,6 +62,7 @@ Invalid syntax.
 >fetch favorite_animal
 Value not found.
 ```
+
 The `exit` command closes the session. You may also use ctrl+c
 ```
 > exit
@@ -71,6 +74,11 @@ If any unknown commands are received, expect to see the following string;
 Unknown command. Known commands are: put, fetch, exit
 ```
 
+### **Uninstall tool**
+If you wish to uninstall the tool, run the following
+```
+$ npm uninstall --location=global favorite_things_cli
+```
 
 ## Tools used
 - [Node.js](https://nodejs.org/en/)
