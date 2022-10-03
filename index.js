@@ -39,7 +39,7 @@ export default async function main() {
 
 export function addKeyValue(key, value, extra) {
   if (!key || !value || extra) {
-    console.log("Invalid syntax");
+    console.log("Invalid syntax.");
   } else {
     if (key in storedInput) {
       Object.assign(storedInput, { [key]: value })
@@ -53,10 +53,10 @@ export function addKeyValue(key, value, extra) {
 
 export function fetch(query, value, extra) {
   if (!query || value == '' || extra == '') {
-    console.log("Invalid syntax")
+    console.log("Invalid syntax.")
     return;
   } else if (!storedInput[query]) {
-    console.log('value not found');
+    console.log('Value not found.');
     return;
   }
 
@@ -76,7 +76,7 @@ export function exit() {
 }
 
 export function validateArguments(args) {
-  const parseLine = args.trim().split(" ");
+  const parseLine = args.toLowerCase().trim().split(" ");
   const command = parseLine[0];
   const key = parseLine[1];
   const value = parseLine[2];
