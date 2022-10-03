@@ -4,18 +4,20 @@
 ## Setup and install
 Node is required. Check to see if you have node by running the following
 ```
-node -v
-v18.9.1 // <-- any version here means you have it
+$ node -v
+v18.9.1 // 👈 any version here means you have it
 ```
 If you do not have node, the recommended way to install it with the following 
 ```
-curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
+$ curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
 ```
 
 
 Download ZIP and unzip file, or clone repo from terminal
 
-        `git clone https://github.com/taylulz/favorite_things_cli.git`
+```
+$ git clone https://github.com/taylulz/favorite_things_cli.git
+```
 
 From your terminal, navigate into to folder: ` cd favorite_things_cli`
 
@@ -26,15 +28,19 @@ Run tests with `npm test` check if i need to intall/sudo first?
 ## Running the program
 Install the cli by running
 ```
-npm install -g
+$ npm install -g
 ```
-Run the program by typing `key-value` into the terminal and you will be met with the following command prompt
+Run the program by typing the following into the terminal
+```
+$ key-value
+``` 
+You will be met with the following command prompt
 ```
 >
 ```
 ## Possible commands
 ### **Put command**
-The `put` command can receive exactly two arguments, a key and a value. Input more or less and expect to see `Invalid syntax.` in the terminal. If run sucessfully, expect to see `> ok`
+The `put` command can receive exactly two arguments, a key and a value. Input more or less and expect to see `Invalid syntax.` in the terminal. If run sucessfully, expect to see `ok`. If given an existing key, the `put` command will update that key's value.
           
 ```
 > put favorite_color  // 👈 only one argument
@@ -60,7 +66,7 @@ The `exit` command closes the session. You may also use ctrl+c
 Bye!
 ```
 ### **Unknown commands**
-If any unknown commands are received, expect to see the following string
+If any unknown commands are received, expect to see the following string;
 ```
 Unknown command. Known commands are: put, fetch, exit
 ```
@@ -72,7 +78,7 @@ Unknown command. Known commands are: put, fetch, exit
 - [Mocha](https://mochajs.org/)
 - [Chai](https://www.chaijs.com/)
 
-Click below to view the requirements this tool was designed to meet.
+This tool was designed to meet specific requirements. Click below to view the requirements.
 <details>
 Create a command line tool for storing and fetching key-value string pairs. 
 
@@ -100,6 +106,7 @@ the string "Invalid syntax."
 
 your program should accept any
 reasonable strings as names and values.
+```
 $ key-value
 > put favorite_color purple
 ok
@@ -112,4 +119,5 @@ purple
 value not found
 > exit
 Bye!
+```
 </details>
