@@ -1,5 +1,5 @@
 # Favorite Things command line tool
-> ###### a tool to store any reasonable key-value pairs
+> ###### a Node.js cli tool to store any reasonable key-value pairs
 
 ## Setup and install
 Node is required. Check to see if you have node by running the following
@@ -13,7 +13,7 @@ $ curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bas
 ```
 
 
-Download ZIP and unzip file, or clone repo from terminal. If you've already downloaded the folder you may skip this step.
+Download ZIP and unzip file, or clone repo from terminal. If you already have the folder locally, you may skip this step.
 
 ```
 $ git clone https://github.com/taylulz/favorite_things_cli.git
@@ -26,7 +26,7 @@ Run `npm i` to setup tests
 Run tests with `npm test`. There should be 9 passing tests.
 
 ## Running the program
-Install the cli by running
+Install the tool by running
 ```
 $ npm install --location=global
 ```
